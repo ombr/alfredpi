@@ -21,9 +21,28 @@ module Alfredpi
       self.class.lights
     end
 
+    def volumedown
+      power = lights.first.brightness - 50
+      lights.each do |light|
+        light.brightness = power
+      end
+    end
+
+    def volumeup
+      puts 'TEST VOLUMEUP'
+      power = lights.first.brightness + 50
+      puts power
+      lights.each do |light|
+        light.brightness = power
+      end
+    end
+
     def power
       puts 'POWER !'
-      power = !lights.first.on?
+      first = lights.first
+      first.refresh
+      power = !first.on?
+      puts power
       lights.each do |light|
         light.on = power
       end
