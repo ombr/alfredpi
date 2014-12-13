@@ -37,7 +37,7 @@ module Alfredpi
     end
 
     def up
-      power = [lights.first.hue + 100, 65 535].min
+      power = [lights.first.hue + 100, 65_535].min
       puts power
       lights.each do |light|
         light.hue = power
