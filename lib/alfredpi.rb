@@ -68,7 +68,7 @@ module Alfredpi
       end
     end
 
-    def power_up
+    def power
       puts 'POWER !'
       first = lights.first
       first.refresh
@@ -82,7 +82,8 @@ module Alfredpi
   def self.start
     EM.run do
       Keyboard.add_handler(lambda do |buffer|
-        return unless /. . KEY_([^ ]*) .*/i.match(buffer)
+        puts buffer
+        return unless /.*KEY_([^ ]*) .*/i.match(buffer)
         key = $1
         puts "KEY : #{key}"
         alfred = Alfred.alfred
