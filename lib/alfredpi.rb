@@ -37,14 +37,32 @@ module Alfredpi
     end
 
     def up
+      power = [lights.first.hue + 100, 65 535].min
+      puts power
+      lights.each do |light|
+        light.hue = power
+      end
+    end
+
+    def down
+      power = [lights.first.hue - 100, 0].max
+      puts power
+      lights.each do |light|
+        light.hue = power
+      end
+    end
+
+    def scrollup
       power = [lights.first.saturation + 10, 255].min
+      puts power
       lights.each do |light|
         light.saturation = power
       end
     end
 
-    def down
-      power = [lights.first.saturation - 10, 255].max
+    def scrolldown
+      power = [lights.first.saturation - 10, 0].max
+      puts power
       lights.each do |light|
         light.saturation = power
       end
