@@ -4,40 +4,41 @@ require 'alfredpi/version'
 require 'alfredpi/keyboard'
 
 module Alfredpi
+  class Alfred
+    def self.hue
+      @hue ||= Hue::Client.new
+    end
+
+    def self.lights
+      hue.lights
+    end
+
+    def self.alfred
+      @alfred ||= new
+    end
+
+    def lights
+      self.class.lights
+    end
+
+    def power
+      puts 'POWER !'
+      power = !lights.first.on?
+      lights.each do |light|
+        light.on = power
+      end
+    end
+  end
   def self.start
-    # hue = Hue::Client.new
-    # hue.lights.each do |light|
-    #   lights = {}
-    #   lights['all'] << light
-    #   %w(Chambre Salon).each do |room|
-    #     if light.name.include? room
-    #       lights[room] ||= []
-    #       lights[room] << light
-    #     end
-    #   end
-    #   puts light.name
-    #   puts light.hue
-    #   puts light.saturation
-    #   puts light.brightness
-    # end
-    # hue.lights.each do |light|
-    #   light.on = true
-    # end
     EM.run do
       Keyboard.add_handler(lambda do |buffer|
-        return if buffer.include? '_UP'
-        puts 'test'
         puts buffer
+        return if buffer.include? '_UP'
         return unless /. . KEY_([^ ]*) .*/i.match(buffer)
         key = $1
         puts "KEY : #{key}"
-        case key
-        when 'POWER'
-          hue = Hue::Client.new
-          power = hue.lights.first.on?
-          puts power
-          hue.lights.each { |l| l.on = !power }
-        end
+        alfred = Alfred.alfred
+        alfred.send(key.downcase) if alfred.respond_to?(key.downcase)
       end)
       EM.open_keyboard(Keyboard)
       EM.add_periodic_timer(1) { puts '.' }
