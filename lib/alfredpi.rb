@@ -22,7 +22,7 @@ module Alfredpi
     end
 
     def volumedown
-      power = lights.first.brightness - 50
+      power = [lights.first.brightness - 10, 0].max
       lights.each do |light|
         light.brightness = power
       end
@@ -30,7 +30,7 @@ module Alfredpi
 
     def volumeup
       puts 'TEST VOLUMEUP'
-      power = lights.first.brightness + 50
+      power = [lights.first.brightness + 10, 255].min
       puts power
       lights.each do |light|
         light.brightness = power
