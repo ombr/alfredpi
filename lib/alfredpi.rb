@@ -29,11 +29,24 @@ module Alfredpi
     end
 
     def volumeup
-      puts 'TEST VOLUMEUP'
       power = [lights.first.brightness + 10, 255].min
       puts power
       lights.each do |light|
         light.brightness = power
+      end
+    end
+
+    def up
+      power = [lights.first.saturation + 10, 255].min
+      lights.each do |light|
+        light.saturation = power
+      end
+    end
+
+    def down
+      power = [lights.first.saturation - 10, 255].max
+      lights.each do |light|
+        light.saturation = power
       end
     end
 
