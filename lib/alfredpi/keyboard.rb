@@ -3,11 +3,9 @@ module Alfredpi
     include EM::Protocols::LineText2
     class << self
       attr_reader :handlers
-      def add_handler
+      def add_handler handler
         @handlers ||= []
-        @handlers << lambda do |buffer|
-          yield buffer
-        end
+        @handlers << handler
       end
     end
 
