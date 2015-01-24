@@ -21,14 +21,23 @@ module Alfredpi
       self.class.lights
     end
 
-    def volumedown(id)
+    def k1(_id)
+      return unless id == '00'
+      lights.each do |light|
+        light.brightness = 255
+        light.hue = 1
+        light.saturation = 60
+      end
+    end
+
+    def kvolumedown(id)
       power = [lights.first.brightness - 10, 0].max
       lights.each do |light|
         light.brightness = power
       end
     end
 
-    def volumeup(id)
+    def kvolumeup(id)
       power = [lights.first.brightness + 10, 255].min
       puts power
       lights.each do |light|
@@ -36,7 +45,7 @@ module Alfredpi
       end
     end
 
-    def up(id)
+    def kup(id)
       power = [lights.first.hue + 1000, 65_535].min
       puts power
       lights.each do |light|
@@ -44,7 +53,7 @@ module Alfredpi
       end
     end
 
-    def down(id)
+    def kdown(id)
       power = [lights.first.hue - 1000, 0].max
       puts power
       lights.each do |light|
@@ -52,7 +61,7 @@ module Alfredpi
       end
     end
 
-    def scrollup(id)
+    def kscrollup(id)
       power = [lights.first.saturation + 10, 255].min
       puts power
       lights.each do |light|
@@ -60,7 +69,7 @@ module Alfredpi
       end
     end
 
-    def scrolldown(id)
+    def kscrolldown(id)
       power = [lights.first.saturation - 10, 0].max
       puts power
       lights.each do |light|
@@ -68,7 +77,7 @@ module Alfredpi
       end
     end
 
-    def power(id)
+    def kpower(id)
       return unless id == '00'
       puts 'POWER !'
       first = lights.first
@@ -89,7 +98,7 @@ module Alfredpi
         key = $2
         puts "KEY : #{key}"
         alfred = Alfred.alfred
-        alfred.send(key.downcase, id) if alfred.respond_to?(key.downcase)
+        alfred.send("k#{key.downcase}", id) if alfred.respond_to?(key.downcase)
       end)
       EM.open_keyboard(Keyboard)
       EM.add_periodic_timer(1) { puts '.' }
