@@ -97,9 +97,9 @@ module Alfredpi
         return unless /.* (..) KEY_([^ ]*) .*/i.match(buffer)
         id = $1
         key = $2
-        puts "KEY : #{key}"
         alfred = Alfred.alfred
         method = "k#{key.downcase}"
+        puts "method : #{method}"
         alfred.send(method, id) if alfred.respond_to?(method)
       end)
       EM.open_keyboard(Keyboard)
