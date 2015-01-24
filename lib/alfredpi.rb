@@ -89,6 +89,7 @@ module Alfredpi
       end
     end
   end
+
   def self.start
     EM.run do
       Keyboard.add_handler(lambda do |buffer|
@@ -98,7 +99,8 @@ module Alfredpi
         key = $2
         puts "KEY : #{key}"
         alfred = Alfred.alfred
-        alfred.send("k#{key.downcase}", id) if alfred.respond_to?(key.downcase)
+        method = "k#{key.downcase}"
+        alfred.send(method, id) if alfred.respond_to?(method)
       end)
       EM.open_keyboard(Keyboard)
       EM.add_periodic_timer(1) { puts '.' }
