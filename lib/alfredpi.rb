@@ -21,7 +21,7 @@ module Alfredpi
       self.class.lights
     end
 
-    def k1(_id)
+    def k1(id)
       return unless id == '00'
       lights.each do |light|
         light.brightness = 255
