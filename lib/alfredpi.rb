@@ -25,8 +25,35 @@ module Alfredpi
       return unless id == '00'
       lights.each do |light|
         light.brightness = 255
-        light.hue = 1
-        light.saturation = 60
+        light.hue = 46000
+        light.saturation = 0
+      end
+    end
+
+    def k2(id)
+      return unless id == '00'
+      lights.each do |light|
+        light.brightness = 200
+        light.hue = 46000
+        light.saturation = 50
+      end
+    end
+
+    def k3(id)
+      return unless id == '00'
+      lights.each do |light|
+        light.brightness = 255
+        light.hue = 45535
+        light.saturation = 185
+      end
+    end
+
+    def k4(id)
+      return unless id == '00'
+      lights.each do |light|
+        light.brightness = 0
+        light.hue = 0
+        light.saturation = 255
       end
     end
 
